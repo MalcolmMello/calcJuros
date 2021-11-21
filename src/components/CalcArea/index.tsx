@@ -15,8 +15,13 @@ export const CalcArea = () => {
     const [total, setTotal] = useState(0)
     const [taxes, setTaxes] = useState(0)
 
+    const [taxeMonth, setTaxeMonth] = useState(true)
+    const [taxeYear, setTaxeYear] = useState(false)
+
     useEffect(()=>{
-        setResult(Calc({initialValue, monthly, months, contribution}))
+        if(initialValue >= 0 && contribution >= 0 && monthly >= 0 && months >=0 ) {
+            setResult(Calc({initialValue, monthly, months, contribution}))
+        }
     },[initialValue, monthly, months, contribution])
 
     useEffect(()=>{
@@ -27,13 +32,27 @@ export const CalcArea = () => {
         setTaxes(Taxes({result, initialValue, contribution, months}))
     }, [result])
 
+    const handleMonthly = () => {
+        setTaxeMonth(true)
+        setTaxeYear(false)
+    }
+
+    const handleYearly = () => {
+        setTaxeMonth(false)
+        setTaxeYear(true)
+    }
+
     return (
         <C.Container>
+            <C.Buttons>
+                <C.Button1 onClick={handleMonthly}>Mensal</C.Button1>
+                <C.Button1 onClick={handleYearly}>Anual</C.Button1>
+            </C.Buttons>
             <C.InitialValue>
                 <C.DataArea>
                     <C.AreaInput>
                         <C.Area1>
-                            <p>Valor Inicial</p>
+                            <p>Valor Inicial:</p>
                         </C.Area1>
                         <C.Area2>
                             <p>R$</p> <C.Input1 type="number" value={initialValue} onChange={e=>setInitialValue(parseInt(e.target.value))}/>
@@ -41,7 +60,7 @@ export const CalcArea = () => {
                     </C.AreaInput>
                     <C.AreaInput>
                         <C.Area1>
-                            <p>Aporte/Retirada Mensal:</p>
+                            <p>Aporte/Retirada {taxeMonth === true ? 'Mensal' : 'Anual' }</p>
                         </C.Area1>
                         <C.Area2>
                             <p>R$</p> <C.Input1 type="number" value={contribution} onChange={e=>setContribution(parseInt(e.target.value))}/>
@@ -50,7 +69,7 @@ export const CalcArea = () => {
 
                     <C.AreaInput>
                         <C.Area1>
-                            <p>Taxa Mensal</p>
+                            <p>Taxa {taxeMonth === true ? 'Mensal' : 'Anual' }</p>
                         </C.Area1>
                         <C.Area2>
                             <p>%</p> <C.Input1 type="number" value={monthly} onChange={e=>setMonthly(parseFloat(e.target.value))}/>
@@ -58,7 +77,7 @@ export const CalcArea = () => {
                     </C.AreaInput>
                     <C.AreaInput>
                        <C.Area1>
-                           <p>Meses</p>
+                           <p>{taxeMonth === true ? 'Meses' : 'Anos' }</p>
                        </C.Area1>
                         <C.Area2>
                             <img src="https://img.icons8.com/ios/50/000000/calendar-31.png"/> <C.Input1 type="number" value={months} onChange={e=>setMonths(parseInt(e.target.value))}/>
@@ -68,18 +87,24 @@ export const CalcArea = () => {
                 <C.ResultArea>
                     <C.Total>
                         <h1>Soma Total</h1>
-                        <h2>R$ {result.toFixed(2)}</h2>
+                        <h2>R$ 
+                            {result.toFixed(2)}
+                        </h2>
                     </C.Total>
                     <C.Results>
-                        <p>Aplicação Inicial:</p>
-                        <p>R$ {initialValue.toFixed(2)}</p>
+                        <p className="title">Aplicação Inicial:</p>
+                        <p>R$ 
+                        { initialValue >= 0 &&
+                            initialValue.toFixed(2)
+                        }
+                        </p>
                     </C.Results>
                     <C.Results>
-                        <p>Total Aplicado:</p>
+                        <p className="title">Total Aplicado:</p>
                         <p>R$ {total.toFixed(2)}</p>
                     </C.Results>
                     <C.Results>
-                        <p>Juros Totais: </p>
+                        <p className="title">Juros Totais: </p>
                         <p>R$ {taxes}</p>
                     </C.Results>
                 </C.ResultArea>
