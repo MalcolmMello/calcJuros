@@ -16,7 +16,6 @@ export const CalcArea = () => {
     const [taxes, setTaxes] = useState(0)
 
     const [taxeMonth, setTaxeMonth] = useState(true)
-    const [taxeYear, setTaxeYear] = useState(false)
 
     useEffect(()=>{
         if(initialValue >= 0 && contribution >= 0 && monthly >= 0 && months >=0 ) {
@@ -34,12 +33,10 @@ export const CalcArea = () => {
 
     const handleMonthly = () => {
         setTaxeMonth(true)
-        setTaxeYear(false)
     }
 
     const handleYearly = () => {
         setTaxeMonth(false)
-        setTaxeYear(true)
     }
 
     return (
