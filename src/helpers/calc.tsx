@@ -18,11 +18,17 @@ type Props2 = {
     contribution: number
 }
 
-export const Calc = ({initialValue, monthly, months, contribution}: Props) => {
-    let invest = initialValue + (months*contribution)
-    let count = (invest*(1 + monthly/100)**months)
+export const Calc = ({initialValue, monthly, months, contribution}: Props) => {;
+    let init = initialValue;
 
-    return count
+    for (let i=0;i<months;i++) {
+        init = init + contribution
+        init = init+((init)*(monthly/100))
+    }
+
+    console.log(init)
+
+    return init 
 }
 
 export const Total = ({initialValue, months, contribution}: Props1) => {

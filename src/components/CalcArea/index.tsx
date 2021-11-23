@@ -32,11 +32,20 @@ export const CalcArea = () => {
     }, [result])
 
     const handleMonthly = () => {
+        deleteData()
         setTaxeMonth(true)
     }
 
     const handleYearly = () => {
+        deleteData()
         setTaxeMonth(false)
+    }
+
+    const deleteData = () => {
+        setInitialValue(0);
+        setContribution(0);
+        setMonthly(0);
+        setMonths(0);
     }
 
     return (
@@ -52,7 +61,7 @@ export const CalcArea = () => {
                             <p>Valor Inicial:</p>
                         </C.Area1>
                         <C.Area2>
-                            <p>R$</p> <C.Input1 type="number" value={initialValue} onChange={e=>setInitialValue(parseInt(e.target.value))}/>
+                            <p>R$</p> <C.Input1 type="number" value={initialValue} onChange={e=>setInitialValue(parseFloat(e.target.value))}/>
                         </C.Area2>
                     </C.AreaInput>
                     <C.AreaInput>
@@ -60,7 +69,7 @@ export const CalcArea = () => {
                             <p>Aporte/Retirada {taxeMonth === true ? 'Mensal' : 'Anual' }</p>
                         </C.Area1>
                         <C.Area2>
-                            <p>R$</p> <C.Input1 type="number" value={contribution} onChange={e=>setContribution(parseInt(e.target.value))}/>
+                            <p>R$</p> <C.Input1 type="number" value={contribution} onChange={e=>setContribution(parseFloat(e.target.value))}/>
                         </C.Area2>
                     </C.AreaInput>
 
